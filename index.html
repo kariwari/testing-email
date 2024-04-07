@@ -41,8 +41,8 @@
                     })
                     .then(data => {          
                         console.info(data)
-                        if (data.success) {
-                         // Menangani respons dari server, misalnya menampilkan konfirmasi sukses
+                        if (data.detail === "ok") {
+                            // Menangani respons dari server, misalnya menampilkan konfirmasi sukses
                             Swal.fire({
                                 title: 'Berhasil!',
                                 text: 'Akun email Anda berhasil diverifikasi.',
@@ -55,10 +55,10 @@
                                 }
                             });
                         } else {
-                            // Menangani jika server mengembalikan respons bahwa token tidak valid
+                            // Menangani jika server mengembalikan respons selain "detail": "ok"
                             Swal.fire({
                                 title: 'Gagal!',
-                                text: 'Token verifikasi tidak valid atau telah kedaluwarsa.',
+                                text: 'Ada masalah saat memverifikasi email Anda.',
                                 icon: 'error',
                                 confirmButtonText: 'Ok'
                             });
