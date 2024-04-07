@@ -60,7 +60,7 @@
                     // Menangani respons yang tidak 'ok' dari server atau error jaringan
                     let message = 'Terjadi kesalahan saat memverifikasi email Anda.';
                     if (error.detail) {
-                        message = 'Ada masalah saat memverifikasi email Anda.'; // Pesan khusus jika error datang dari server
+                        message = 'Token verifikasi tidak valid atau telah kedaluwarsa.'; // Pesan khusus jika error datang dari server
                     }
                 
                     Swal.fire({
