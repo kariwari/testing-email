@@ -39,7 +39,8 @@
                         }
                         return response.json(); // Asumsikan server mengembalikan respons dalam format JSON
                     })
-                    .then(data => {                       
+                    .then(data => {          
+                        console.info(data)
                         if (data.success) {
                          // Menangani respons dari server, misalnya menampilkan konfirmasi sukses
                             Swal.fire({
