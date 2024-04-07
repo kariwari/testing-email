@@ -39,19 +39,29 @@
                         }
                         return response.json(); // Asumsikan server mengembalikan respons dalam format JSON
                     })
-                    .then(data => {
-                        // Menangani respons dari server, misalnya menampilkan konfirmasi sukses
-                        Swal.fire({
-                            title: 'Berhasil!',
-                            text: 'Akun email Anda berhasil diverifikasi.',
-                            icon: 'success',
-                            confirmButtonText: 'Ok'
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                // Mengubah konten tag <p> setelah pengguna mengklik "Ok"
-                                document.querySelector('p').textContent = 'Email telah diverifikasi, silahkan tutup tab ini dan login ke akun Anda.';
-                            }
-                        });
+                    .then(data => {                       
+                        if (data.success) {
+                         // Menangani respons dari server, misalnya menampilkan konfirmasi sukses
+                            Swal.fire({
+                                title: 'Berhasil!',
+                                text: 'Akun email Anda berhasil diverifikasi.',
+                                icon: 'success',
+                                confirmButtonText: 'Ok'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    // Mengubah konten tag <p> setelah pengguna mengklik "Ok"
+                                    document.querySelector('p').textContent = 'Email telah diverifikasi, silahkan tutup tab ini dan login ke akun Anda.';
+                                }
+                            });
+                        } else {
+                            // Menangani jika server mengembalikan respons bahwa token tidak valid
+                            Swal.fire({
+                                title: 'Gagal!',
+                                text: 'Token verifikasi tidak valid atau telah kedaluwarsa.',
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        }
                     })
                     .catch(error => {
                         console.error('Error:', error);
