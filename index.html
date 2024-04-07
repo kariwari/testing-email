@@ -33,47 +33,43 @@
                     body: JSON.stringify({ key: token }) // Mengirimkan token dalam format JSON
                 })
                     .then(response => {
-                        console.info(response)
+                    return response.json().then(data => {
+                        // Memeriksa jika respons server tidak 'ok' dan melemparkan data untuk digunakan di .catch()
                         if (!response.ok) {
-                            throw new Error('Network response was not ok');
+                            throw data;
                         }
-                        return response.json(); // Asumsikan server mengembalikan respons dalam format JSON
-                    })
-                    .then(data => {          
-                        console.info(data)
-                        if (data.detail === "ok") {
-                            // Menangani respons dari server, misalnya menampilkan konfirmasi sukses
-                            Swal.fire({
-                                title: 'Berhasil!',
-                                text: 'Akun email Anda berhasil diverifikasi.',
-                                icon: 'success',
-                                confirmButtonText: 'Ok'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    // Mengubah konten tag <p> setelah pengguna mengklik "Ok"
-                                    document.querySelector('p').textContent = 'Email telah diverifikasi, silahkan tutup tab ini dan login ke akun Anda.';
-                                }
-                            });
-                        } else {
-                            // Menangani jika server mengembalikan respons selain "detail": "ok"
-                            Swal.fire({
-                                title: 'Gagal!',
-                                text: 'Ada masalah saat memverifikasi email Anda.',
-                                icon: 'error',
-                                confirmButtonText: 'Ok'
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        // Menampilkan pesan error jika permintaan gagal
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'Terjadi kesalahan saat memverifikasi email Anda.',
-                            icon: 'error',
-                            confirmButtonText: 'Ok'
-                        });
+                        return data; // Asumsikan server mengembalikan respons dalam format JSON
                     });
+                })
+                .then(data => {
+                    // Menangani respons "ok" dari server
+                    if (data.detail === "ok") {
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: 'Akun email Anda berhasil diverifikasi.',
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                document.querySelector('p').textContent = 'Email telah diverifikasi, silahkan tutup tab ini dan login ke akun Anda.';
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    // Menangani respons yang tidak 'ok' dari server atau error jaringan
+                    let message = 'Terjadi kesalahan saat memverifikasi email Anda.';
+                    if (error.detail) {
+                        message = 'Ada masalah saat memverifikasi email Anda.'; // Pesan khusus jika error datang dari server
+                    }
+                
+                    Swal.fire({
+                        title: 'Gagal!',
+                        text: message,
+                        icon: 'warning', // Atau 'error', tergantung keseriusan masalahnya
+                        confirmButtonText: 'Ok'
+                    });
+                });
             }
         });
     </script>
