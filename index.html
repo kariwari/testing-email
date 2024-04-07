@@ -1,67 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email Verification</title>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body>
     <p>Memproses verifikasi email Anda...</p>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Mengambil URL saat ini dan memecahnya untuk mendapatkan token
-            var currentUrl = window.location.href;
-            var tokenSegments = currentUrl.split('/');
-            var token = tokenSegments[tokenSegments.length - 2]; // Token berada di segmen terakhir sebelum trailing slash
+        document.addEventListener('DOMContentLoaded', function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            var token = urlParams.get('key'); // Mengambil nilai token dari parameter 'key'
 
-            // Membuat formulir tersembunyi
-            var form = document.createElement('form');
-            form.style.display = 'none';
-            form.method = 'POST';
-            form.action = 'http://localhost:8000/api/v1/auth/registration/account-confirm-email/'; // Endpoint server untuk verifikasi
-            document.body.appendChild(form);
-
-            var tokenInput = document.createElement('input');
-            tokenInput.type = 'hidden';
-            tokenInput.name = 'token';
-            tokenInput.value = token; // Menetapkan nilai token ke input tersembunyi
-            form.appendChild(tokenInput);
-
-            // Mengirimkan formulir dan menangani respons
-            fetch(form.action, {
-                method: form.method,
-                body: new FormData(form),
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded', // Pastikan header sesuai dengan yang diperlukan oleh server Anda
-                }
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json(); // Asumsikan respons server dalam format JSON
-            })
-            .then(data => {
-                // Verifikasi sukses, tampilkan SweetAlert2
-                Swal.fire({
-                    title: 'Berhasil!',
-                    text: 'Akun email Anda berhasil diverifikasi.',
-                    icon: 'success',
-                    confirmButtonText: 'Ok'
-                });
-            })
-            .catch(error => {
-                console.error('There has been a problem with your fetch operation:', error);
-                // Tampilkan SweetAlert2 untuk error
+            if (!token) {
                 Swal.fire({
                     title: 'Error!',
-                    text: 'Terjadi kesalahan saat memverifikasi email Anda.',
+                    text: 'Token verifikasi tidak ditemukan.',
                     icon: 'error',
                     confirmButtonText: 'Ok'
                 });
-            });
+            } else {
+                // Mengirim token ke server dengan permintaan POST
+                fetch('http://127.0.0.1:8000/api/v1/auth/registration/verify-email/', { // Ganti 'URL_TUJUAN' dengan URL endpoint server Anda
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ key: token }) // Mengirimkan token dalam format JSON
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json(); // Asumsikan server mengembalikan respons dalam format JSON
+                    })
+                    .then(data => {
+                        // Menangani respons dari server, misalnya menampilkan konfirmasi sukses
+                        Swal.fire({
+                            title: 'Berhasil!',
+                            text: 'Akun email Anda berhasil diverifikasi.',
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        // Menampilkan pesan error jika permintaan gagal
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Terjadi kesalahan saat memverifikasi email Anda.',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
+                    });
+            }
         });
     </script>
 </body>
+
 </html>
