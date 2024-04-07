@@ -14,7 +14,6 @@
         document.addEventListener('DOMContentLoaded', function () {
             var urlParams = new URLSearchParams(window.location.search);
             var token = urlParams.get('key'); // Mengambil nilai token dari parameter 'key'
-            console.info(JSON.stringify({ key: token }))
 
             if (!token) {
                 Swal.fire({
