@@ -40,12 +40,15 @@
                         return response.json(); // Asumsikan server mengembalikan respons dalam format JSON
                     })
                     .then(data => {
-                        // Menangani respons dari server, misalnya menampilkan konfirmasi sukses
                         Swal.fire({
                             title: 'Berhasil!',
                             text: 'Akun email Anda berhasil diverifikasi.',
                             icon: 'success',
-                            confirmButtonText: 'Ok'
+                            confirmButtonText: 'Tutup Halaman'
+                        }).then((result) => {
+                            if (result.value) {
+                                window.close(); // Mencoba menutup tab
+                            }
                         });
                     })
                     .catch(error => {
