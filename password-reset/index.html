@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create a New Password — Ruang Tunggu</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -61,21 +62,32 @@
     </div>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
-            // Mendapatkan seluruh query string dari URL
-            const queryString = window.location.search;
-
-            // Menggunakan URLSearchParams untuk memparse query string
-            const urlParams = new URLSearchParams(queryString);
-
             // Mendapatkan nilai 'uid' dan 'token' dari URL
-            const uid = urlParams.get('uid');
-            const token = urlParams.get('token');
+            const uid = new URLSearchParams(window.location.search).get('uid');
+            const token = new URLSearchParams(window.location.search).get('token');
 
             // Jika uid dan token ditemukan, set nilai input di form
-            if (uid && token) {
-                document.getElementById('uid').value = uid;
-                document.getElementById('token').value = token;
+            // if (uid && token) {
+            //     document.getElementById('uid').value = uid;
+            //     document.getElementById('token').value = token;
+            // }
+            
+            // Penanganan jika uid atau token tidak ditemukan dalam URL
+            if (!uid || !token) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'UID atau token tidak ditemukan. Pastikan Anda mengakses URL yang benar.',
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                }).then((result) => {
+                    // Opsi: Anda bisa mengarahkan pengguna ke halaman lain jika mereka menekan 'Ok'
+                    // window.location.href = '/some/other/page';
+                });
+                return; // Menghentikan eksekusi lebih lanjut dari script ini
             }
+
+            document.getElementById('uid').value = uid;
+            document.getElementById('token').value = token;
 
             document.getElementById('submitBtn').addEventListener('click', function () {
                 var uid = document.getElementById('uid').value;
@@ -99,10 +111,28 @@
                     .then(data => {
                         console.log('Success:', data);
                         // Tambahkan tindakan setelah berhasil, seperti menampilkan pesan atau mengalihkan halaman
+                        Swal.fire({
+                            title: 'Sukses!',
+                            text: 'Password Anda telah berhasil direset.',
+                            icon: 'success',
+                            confirmButtonText: 'Ok'
+                        });
                     })
                     .catch((error) => {
                         console.error('Error:', error);
                         // Tambahkan penanganan kesalahan, seperti menampilkan pesan kesalahan
+                        error.json().then(err => {
+                            let errorMessage = 'Terjadi kesalahan, silakan coba lagi nanti.';
+                            if (error.status === 400) {
+                                errorMessage = 'Ada masalah dengan uid atau token Anda, mungkin salah atau sudah kadaluarsa.'; // Pesan error spesifik dari server
+                            }
+                            Swal.fire({
+                                title: 'Error!',
+                                text: errorMessage,
+                                icon: 'error',
+                                confirmButtonText: 'Ok'
+                            });
+                        });
                     });
             });
         });
