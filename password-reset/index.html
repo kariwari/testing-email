@@ -121,33 +121,16 @@
                     .catch((error) => {
                         console.error('Error:', error);
                         // Tambahkan penanganan kesalahan, seperti menampilkan pesan kesalahan
-                        if (error instanceof Response) {
-                            // Error berasal dari respons fetch, coba dapatkan teksnya untuk menampilkan pesan yang lebih spesifik
-                            error.text().then(errorMessage => {
-                                let message = 'Terjadi kesalahan, silakan coba lagi nanti.';
-                                try {
-                                    // Coba parse pesan error jika dalam format JSON
-                                    const errorData = JSON.parse(errorMessage);
-                                    if (errorData.detail) message = errorData.detail;
-                                } catch (e) {
-                                    // Jika parsing gagal, gunakan teks asli
-                                    message = errorMessage;
-                                }
-                                
-                                Swal.fire({
-                                    title: 'Error!',
-                                    text: message,
-                                    icon: 'error'
-                                });
-                            });
-                        } else {
-                            // Error tidak berasal dari fetch, mungkin kesalahan jaringan atau kesalahan runtime lainnya
-                            Swal.fire({
-                                title: 'Error!',
-                                text: 'Terjadi kesalahan, mungkin masalah jaringan atau kesalahan di sisi anda.',
-                                icon: 'error'
-                            });
+                        let errorMessage = 'Terjadi kesalahan, silakan coba lagi nanti.';
+                        if (error.status === 400) {
+                            errorMessage = 'Ada masalah dengan uid atau token Anda, mungkin salah atau sudah kadaluarsa.'; // Pesan error spesifik dari server
                         }
+                        Swal.fire({
+                            title: 'Error!',
+                            text: errorMessage,
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                        });
                     });
             });
         });
