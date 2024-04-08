@@ -72,10 +72,10 @@
 
             document.getElementById('uid').value = uid;
             document.getElementById('token').value = token;
-
-            document.getElementById('submitBtn').addEventListener('click', function () {
-                var uid = document.getElementById('uid').value;
-                var token = document.getElementById('token').value;
+            
+            const form = document.getElementById('resetPasswordForm');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
                 var password = document.getElementById('password').value;
                 var confirmPassword = document.getElementById('confirm_password').value;
 
