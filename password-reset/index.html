@@ -93,6 +93,7 @@
                 })
                     .then(response => response.json())
                     .then(data => {
+                        console.log('Response:', response);
                         console.log('Success:', data);
                         // Tambahkan tindakan setelah berhasil, seperti menampilkan pesan atau mengalihkan halaman
                         Swal.fire({
