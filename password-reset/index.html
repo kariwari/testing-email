@@ -1,53 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Reset Confirm</title>
+    <title>Create a New Password — Ruang Tunggu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
-    <form id="resetPasswordForm">  
-        <div>
-            <label for="uid">Uid</label>
-            <input name="uid" type="text" readonly id="uid" placeholder="Uid">
+    <div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-6 sm:py-12">
+        <img src="https://play.tailwindcss.com/img/beams.jpg" alt=""
+            class="absolute left-1/2 top-1/2 max-w-none -translate-x-1/2 -translate-y-1/2" width="1308" />
+        <div
+            class="absolute inset-0 bg-[url(https://play.tailwindcss.com/img/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]">
         </div>
-        <div>
-            <label for="token">Token</label>
-            <input name="token" type="text" readonly id="token" placeholder="Token">
-        </div>
-        <div>
-            <label for="new_password1">Password</label>
-            <input name="password" type="password" id="new_password1" placeholder="Password">
-        </div>
-        <div>
-            <label for="new_password2">Ulangi Password</label>
-            <input name="confirm_password" type="password" id="new_password2" placeholder="Password">
-        </div>
-        <div>
-            <button type="button" id="submitBtn">Simpan Password Baru</button>
-        </div>
-    </form>
 
+        <div
+            class="relative w-full bg-white px-6 pb-8 pt-10 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
+            <div class="space-y-4 p-6 sm:p-8 md:space-y-6">
+                <a href="#" class="mb-6 flex items-center text-2xl font-semibold text-gray-900">
+                    <img class="mr-2 h-8 w-8"
+                        src="https://raw.githubusercontent.com/kariwari/testing-email/384acefa817a6472c09702420d59e9c704d8bff3/logo-ruangtunggu.png"
+                        alt="logo" />
+                    Ruang Tunggu
+                </a>
+                <h1 class="text-xl font-semibold leading-tight tracking-tight text-gray-900 md:text-2xl">Silahkan Buat
+                    password baru</h1>
+                <form class="space-y-4 md:space-y-6" id="resetPasswordForm" action="#">
+                    <div>
+                        <label for="uid" class="mb-2 block text-sm font-medium text-gray-900">UID</label>
+                        <input type="text" name="uid" id="uid"
+                            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 sm:text-sm"
+                            required="" />
+                    </div>
+                    <div>
+                        <label for="token" class="mb-2 block text-sm font-medium text-gray-900">Token</label>
+                        <input type="text" name="token" id="token" readonly
+                            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 sm:text-sm"
+                            required="" />
+                    </div>
+                    <div>
+                        <label for="email" class="mb-2 block text-sm font-medium text-gray-900">Password baru</label>
+                        <input type="password" name="password" id="password" placeholder="••••••••"
+                            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 sm:text-sm"
+                            required="" />
+                    </div>
+                    <div>
+                        <label for="confirm_password" class="mb-2 block text-sm font-medium text-gray-900">Ulangi
+                            password baru</label>
+                        <input type="password" name="confirm_password" id="confirm_password" placeholder="••••••••"
+                            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 sm:text-sm"
+                            required="" />
+                    </div>
+                    <button type="submit"
+                        class="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300">Simpan</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
             // Mendapatkan seluruh query string dari URL
             const queryString = window.location.search;
-    
+
             // Menggunakan URLSearchParams untuk memparse query string
             const urlParams = new URLSearchParams(queryString);
-    
+
             // Mendapatkan nilai 'uid' dan 'token' dari URL
             const uid = urlParams.get('uid');
             const token = urlParams.get('token');
-    
+
             // Jika uid dan token ditemukan, set nilai input di form
             if (uid && token) {
                 document.getElementById('uid').value = uid;
                 document.getElementById('token').value = token;
             }
 
-            document.getElementById('submitBtn').addEventListener('click', function() {
+            document.getElementById('submitBtn').addEventListener('click', function () {
                 var uid = document.getElementById('uid').value;
                 var token = document.getElementById('token').value;
                 var password = document.getElementById('new_password1').value;
@@ -65,17 +95,18 @@
                         confirm_password: confirmPassword
                     })
                 })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Success:', data);
-                    // Tambahkan tindakan setelah berhasil, seperti menampilkan pesan atau mengalihkan halaman
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    // Tambahkan penanganan kesalahan, seperti menampilkan pesan kesalahan
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                        // Tambahkan tindakan setelah berhasil, seperti menampilkan pesan atau mengalihkan halaman
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        // Tambahkan penanganan kesalahan, seperti menampilkan pesan kesalahan
+                    });
             });
         });
     </script>
 </body>
+
 </html>
