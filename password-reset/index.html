@@ -91,11 +91,22 @@
                         confirm_password: confirmPassword
                     })
                 })
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            if (response.status === 400) {
+                                // Jika status respons adalah 400, proses sebagai error dan ambil pesannya
+                                return response.json().then(data => {
+                                    throw new Error(data.error || 'Ada masalah dengan token Anda, mungkin salah atau sudah kadaluarsa.');
+                                });
+                            }
+                            // Untuk status error lain, lempar error generik
+                            throw new Error('Terjadi kesalahan pada server.');
+                        }
+                        return response.json();
+                    })
                     .then(data => {
-                        console.log('Response:', response);
+                        // Penanganan untuk respons sukses
                         console.log('Success:', data);
-                        // Tambahkan tindakan setelah berhasil, seperti menampilkan pesan atau mengalihkan halaman
                         Swal.fire({
                             title: 'Sukses!',
                             text: 'Password Anda telah berhasil direset.',
@@ -103,16 +114,12 @@
                             confirmButtonText: 'Ok'
                         });
                     })
-                    .catch((error) => {
+                    .catch(error => {
+                        // Penanganan untuk semua jenis error
                         console.error('Error:', error);
-                        // Tambahkan penanganan kesalahan, seperti menampilkan pesan kesalahan
-                        let errorMessage = 'Terjadi kesalahan, silakan coba lagi nanti.';
-                        if (error.status === 400) {
-                            errorMessage = 'Ada masalah dengan uid atau token Anda, mungkin salah atau sudah kadaluarsa.'; // Pesan error spesifik dari server
-                        }
                         Swal.fire({
                             title: 'Error!',
-                            text: errorMessage,
+                            text: error.message || 'Terjadi kesalahan, silakan coba lagi nanti.',
                             icon: 'error',
                             confirmButtonText: 'Ok'
                         });
