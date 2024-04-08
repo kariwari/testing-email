@@ -31,14 +31,20 @@
 
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
-            var url_elements = window.location.pathname.split('/');
-            if (url_elements.length >= 5) {
-                var uid = url_elements[url_elements.length - 3];
-                var token = url_elements[url_elements.length - 2];
-                if (uid && token) {
-                    document.getElementById('uid').value = uid;
-                    document.getElementById('token').value = token;
-                }
+            // Mendapatkan seluruh query string dari URL
+            const queryString = window.location.search;
+    
+            // Menggunakan URLSearchParams untuk memparse query string
+            const urlParams = new URLSearchParams(queryString);
+    
+            // Mendapatkan nilai 'uid' dan 'token' dari URL
+            const uid = urlParams.get('uid');
+            const token = urlParams.get('token');
+    
+            // Jika uid dan token ditemukan, set nilai input di form
+            if (uid && token) {
+                document.getElementById('uid').value = uid;
+                document.getElementById('token').value = token;
             }
 
             document.getElementById('submitBtn').addEventListener('click', function() {
