@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset Confirm</title>
+</head>
+
+<body>
+    <form id="resetPasswordForm">  
+        <div>
+            <label for="uid">Uid</label>
+            <input name="uid" type="text" readonly id="uid" placeholder="Uid">
+        </div>
+        <div>
+            <label for="token">Token</label>
+            <input name="token" type="text" readonly id="token" placeholder="Token">
+        </div>
+        <div>
+            <label for="new_password1">Password</label>
+            <input name="password" type="password" id="new_password1" placeholder="Password">
+        </div>
+        <div>
+            <label for="new_password2">Ulangi Password</label>
+            <input name="confirm_password" type="password" id="new_password2" placeholder="Password">
+        </div>
+        <div>
+            <button type="button" id="submitBtn">Simpan Password Baru</button>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            var url_elements = window.location.pathname.split('/');
+            if (url_elements.length >= 3) {
+                var uid = url_elements[url_elements.length - 3];
+                var token = url_elements[url_elements.length - 2];
+                if (uid && token) {
+                    document.getElementById('uid').value = uid;
+                    document.getElementById('token').value = token;
+                }
+            }
+
+            document.getElementById('submitBtn').addEventListener('click', function() {
+                var uid = document.getElementById('uid').value;
+                var token = document.getElementById('token').value;
+                var password = document.getElementById('new_password1').value;
+                var confirmPassword = document.getElementById('new_password2').value;
+
+                fetch('https://lucas-webster-bench-board.trycloudflare.com/api/v1/auth/password/reset/confirm/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        uid: uid,
+                        token: token,
+                        password: password,
+                        confirm_password: confirmPassword
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Success:', data);
+                    // Tambahkan tindakan setelah berhasil, seperti menampilkan pesan atau mengalihkan halaman
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    // Tambahkan penanganan kesalahan, seperti menampilkan pesan kesalahan
+                });
+            });
+        });
+    </script>
+</body>
+</html>
