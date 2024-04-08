@@ -91,35 +91,33 @@
                         confirm_password: confirmPassword
                     })
                 })
-                    .then(response => {
+                    .then(response => response.json().then(data => {
                         if (!response.ok) {
-                            if (response.status === 400) {
-                                // Jika status respons adalah 400, proses sebagai error dan ambil pesannya
-                                return response.json().then(data => {
-                                    throw new Error(data.error || 'Ada masalah dengan token Anda, mungkin salah atau sudah kadaluarsa.');
-                                });
-                            }
-                            // Untuk status error lain, lempar error generik
-                            throw new Error('Terjadi kesalahan pada server.');
+                            // Jika respons tidak ok, lempar data untuk penanganan di catch
+                            throw data;
                         }
-                        return response.json();
-                    })
+                        return data; // Lanjutkan dengan data respons jika tidak ada error
+                    }))
                     .then(data => {
                         // Penanganan untuk respons sukses
-                        console.log('Success:', data);
                         Swal.fire({
                             title: 'Sukses!',
-                            text: 'Password Anda telah berhasil direset.',
+                            text: 'Password Anda telah berhasil direset. Silakan login kembali menggunakan password baru Anda.',
                             icon: 'success',
                             confirmButtonText: 'Ok'
                         });
                     })
                     .catch(error => {
-                        // Penanganan untuk semua jenis error
-                        console.error('Error:', error);
+                        // Penanganan untuk kesalahan
+                        let errorMessage = 'Terjadi kesalahan, silakan coba lagi nanti.';
+                        if (typeof error === 'object') {
+                            // Gabungkan semua pesan error menjadi satu string
+                            errorMessage = Object.values(error).map((e) => e.join(' ')).join(' ');
+                        }
+
                         Swal.fire({
                             title: 'Error!',
-                            text: error.message || 'Terjadi kesalahan, silakan coba lagi nanti.',
+                            text: errorMessage,
                             icon: 'error',
                             confirmButtonText: 'Ok'
                         });
