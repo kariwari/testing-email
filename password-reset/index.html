@@ -11,38 +11,54 @@
 
 <body>
     <section class="relative bg-gray-50 py-6 sm:py-12">
-      <img src="https://play.tailwindcss.com/img/beams.jpg" alt="" class="absolute left-1/2 top-1/2 max-w-none -translate-x-1/2 -translate-y-1/2" width="1308" />
-      <div class="absolute inset-0 bg-[url(https://play.tailwindcss.com/img/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
-      <div class="relative mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
-        <a href="#" class="mb-6 flex items-center text-2xl font-semibold text-gray-900">
-          <img class="mr-2 h-12 w-12" src="https://raw.githubusercontent.com/kariwari/testing-email/384acefa817a6472c09702420d59e9c704d8bff3/logo-ruangtunggu.png" alt="logo" />
-          Ruang Tunggu
-        </a>
-        <div class="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
-          <div class="space-y-4 p-6 sm:p-8 md:space-y-6">
-            <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">Buat password baru</h1>
-            <form class="space-y-4 md:space-y-6" id="resetPasswordForm" action="#">
-              <div class="hidden">
-                <label for="uid" class="mb-2 block text-sm font-medium text-gray-900">UID</label>
-                <input type="text" name="uid" id="uid" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 sm:text-sm" required="" />
-              </div>
-              <div class="hidden">
-                <label for="token" class="mb-2 block text-sm font-medium text-gray-900">Token</label>
-                <input type="text" name="token" id="token" readonly class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 sm:text-sm" required="" />
-              </div>
-              <div>
-                <label for="email" class="mb-2 block text-sm font-medium text-gray-900">Password</label>
-                <input type="password" name="password" id="password" placeholder="••••••••" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 sm:text-sm" required="" />
-              </div>
-              <div>
-                <label for="confirm_password" class="mb-2 block text-sm font-medium text-gray-900">Ulangi password</label>
-                <input type="password" name="confirm_password" id="confirm_password" placeholder="••••••••" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 sm:text-sm" required="" />
-              </div>
-              <button type="submit" class="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300">Simpan</button>
-            </form>
-          </div>
+        <img src="https://play.tailwindcss.com/img/beams.jpg" alt=""
+            class="absolute left-1/2 top-1/2 max-w-none -translate-x-1/2 -translate-y-1/2" width="1308" />
+        <div
+            class="absolute inset-0 bg-[url(https://play.tailwindcss.com/img/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]">
         </div>
-      </div>
+        <div class="relative mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
+            <a href="#" class="mb-6 flex items-center text-2xl font-semibold text-gray-900">
+                <img class="mr-2 h-12 w-12"
+                    src="https://raw.githubusercontent.com/kariwari/testing-email/384acefa817a6472c09702420d59e9c704d8bff3/logo-ruangtunggu.png"
+                    alt="logo" />
+                Ruang Tunggu
+            </a>
+            <div class="w-full rounded-lg bg-white shadow sm:max-w-md md:mt-0 xl:p-0">
+                <div class="space-y-4 p-6 sm:p-8 md:space-y-6">
+                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">Buat password
+                        baru</h1>
+                    <form class="space-y-4 md:space-y-6" id="resetPasswordForm" action="#">
+                        <div class="hidden">
+                            <label for="uid" class="mb-2 block text-sm font-medium text-gray-900">UID</label>
+                            <input type="text" name="uid" id="uid" readonly
+                                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 sm:text-sm"
+                                required="" />
+                        </div>
+                        <div class="hidden">
+                            <label for="token" class="mb-2 block text-sm font-medium text-gray-900">Token</label>
+                            <input type="text" name="token" id="token" readonly
+                                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 sm:text-sm"
+                                required="" />
+                        </div>
+                        <div>
+                            <label for="email" class="mb-2 block text-sm font-medium text-gray-900">Password</label>
+                            <input type="password" name="password" id="password" placeholder="••••••••"
+                                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 sm:text-sm"
+                                required="" />
+                        </div>
+                        <div>
+                            <label for="confirm_password" class="mb-2 block text-sm font-medium text-gray-900">Ulangi
+                                password</label>
+                            <input type="password" name="confirm_password" id="confirm_password" placeholder="••••••••"
+                                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-600 focus:ring-blue-600 sm:text-sm"
+                                required="" />
+                        </div>
+                        <button type="submit"
+                            class="w-full rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
     <script type="text/javascript">
         document.addEventListener("DOMContentLoaded", function () {
@@ -50,12 +66,6 @@
             const uid = new URLSearchParams(window.location.search).get('uid');
             const token = new URLSearchParams(window.location.search).get('token');
 
-            // Jika uid dan token ditemukan, set nilai input di form
-            // if (uid && token) {
-            //     document.getElementById('uid').value = uid;
-            //     document.getElementById('token').value = token;
-            // }
-            
             // Penanganan jika uid atau token tidak ditemukan dalam URL
             if (!uid || !token) {
                 Swal.fire({
@@ -72,7 +82,7 @@
 
             document.getElementById('uid').value = uid;
             document.getElementById('token').value = token;
-            
+
             const form = document.getElementById('resetPasswordForm');
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
@@ -122,6 +132,8 @@
                             confirmButtonText: 'Ok'
                         });
                     });
+
+
             });
         });
     </script>
